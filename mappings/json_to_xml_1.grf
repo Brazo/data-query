@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph __version="3.5.0" author="pat" created="Thu Apr 16 08:08:56 CEST 2015" description="JSON To XML" guiVersion="3.4.4.P" id="1429181740654" licenseCode="Unlicensed" licenseType="Unknown" modified="Thu Apr 16 08:08:56 CEST 2015" modifiedBy="pat" name="JSON_To_XML_1" preview-file="${Project_Home}/src/main/resources/test.json" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="1" __referenceCounter="0" __sourcePath="{}/object/results/data" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="04191a20-5f62-421b-886e-603974f55a94" _parent_id="__parent_id" _type="Input" id="ce93075b-d563-4c3b-9a67-3b341e90e505">
+<Record fieldDelimiter="," name="data" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Input" id="8ec99fc2-0636-4c6f-8c5d-85ad713956cb">
+<Record fieldDelimiter="," name="object" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/search-result/parts/part" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="2668a268-af92-46d9-b474-64b056280b5f" _parent_id="__parent_id" _type="Output" id="288a7c14-3433-485f-b054-bbdc5259156c">
+<Record fieldDelimiter="," name="part" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/search-result/parts/part/item-id" containerType="SINGLE" label="item-id" name="item_id" type="integer"/>
+<Field __index="1" __sourcePath="{}/search-result/parts/part/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __index="2" __sourcePath="{}/search-result/parts/part/link/@rel" containerType="SINGLE" label="rel" name="rel" type="string"/>
+<Field __index="3" __sourcePath="{}/search-result/parts/part/link/@href" containerType="SINGLE" label="href" name="href" type="string"/>
+<Field __index="4" __sourcePath="{}/search-result/parts/part/link/@text()" containerType="SINGLE" label="text()" name="text" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/object/results" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="8ec99fc2-0636-4c6f-8c5d-85ad713956cb" _parent_id="__parent_id" _type="Input" id="04191a20-5f62-421b-886e-603974f55a94">
+<Record fieldDelimiter="," name="results" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/object/results/columns" containerType="list" label="columns" name="columns" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="1" __referenceCounter="0" __sourcePath="{}/object/results/data/row" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="ce93075b-d563-4c3b-9a67-3b341e90e505" _parent_id="__parent_id" _type="Input" id="aea8878d-f113-48ad-a60d-ac63055f64c8">
+<Record fieldDelimiter="," name="row" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="1" __sourcePath="{}/object/results/data/row/itemId" containerType="SINGLE" label="itemId" name="itemId" type="integer"/>
+<Field __index="2" __sourcePath="{}/object/results/data/row/itemName" containerType="SINGLE" label="itemName" name="itemName" type="string"/>
+<Field __index="3" __sourcePath="{}/object/results/data/row/priceEuro" containerType="SINGLE" label="priceEuro" name="priceEuro" type="integer"/>
+<Field __index="4" __sourcePath="{}/object/results/data/row/priceUSD" containerType="SINGLE" label="priceUSD" name="priceUSD" type="integer"/>
+</Record>
+</Metadata>
+<Metadata __filteredMetadata="false" __index="0" __referenceCounter="1" __sourcePath="{}/search-result" _dataStructure="OBJECT" _id="__id" _type="Output" id="2668a268-af92-46d9-b474-64b056280b5f">
+<Record fieldDelimiter="," name="search_result" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node cacheInMemory="true" charset="UTF-8" enabled="enabled" fileURL="dict:outputPayload" guiName="XML WRITER" guiX="900" guiY="20" id="EXT_XML_WRITER0" type="EXT_XML_WRITER" xmlSchemaURL="./src/main/resources/get-parts-schema.xsd">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<search-result xmlns:clover="http://www.cloveretl.com/ns/xmlmapping" clover:inPort="0">
+  <parts>
+    <part clover:inPort="1" clover:key="__parent_id" clover:parentKey="__id">
+      <item-id>$1.item_id</item-id>
+      <type>$1.type</type>
+      <link href="$1.href" rel="$1.rel">$1.text</link>
+    </part>
+  </parts>
+</search-result>]]></attr>
+<attr name="_data_format"><![CDATA[XML]]></attr>
+<attr name="__rootGlobalElementName"><![CDATA[search-result]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'object' -&gt; 'search-result'" guiX="460" guiY="20" id="FOREACH_OBJECT_SEARCH_RESULT" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'results' -&gt; 'part'" guiX="460" guiY="120" id="FOREACH_RESULTS_PART" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+]]></attr>
+</Node>
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiName="JSON READER" guiX="20" guiY="20" id="JSON_READER0" type="JSON_READER">
+<attr name="__isJsonSchema"><![CDATA[false]]></attr>
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context xpath="/root">
+  <Context outPort="0" sequenceField="__id" xpath="object">
+    <Context generatedKey="__parent_id" outPort="1" parentKey="__id" sequenceField="__id" xpath="results">
+      <Mapping cloverField="columns" trim="true" xpath="columns"/>
+    </Context>
+  </Context>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[JSON]]></attr>
+<attr name="jsonSchemaURL"><![CDATA[./src/main/resources/test.json]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="FOREACH_OBJECT_SEARCH_RESULT:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="2668a268-af92-46d9-b474-64b056280b5f" outPort="Port 0 (out)" toNode="EXT_XML_WRITER0:0"/>
+<Edge debugMode="true" fromNode="FOREACH_RESULTS_PART:0" guiBendpoints="" id="Edge3" inPort="Port 1 (in)" metadata="288a7c14-3433-485f-b054-bbdc5259156c" outPort="Port 0 (out)" toNode="EXT_XML_WRITER0:1"/>
+<Edge debugMode="true" fromNode="JSON_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="8ec99fc2-0636-4c6f-8c5d-85ad713956cb" outPort="Port 0 (out)" toNode="FOREACH_OBJECT_SEARCH_RESULT:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:1" guiBendpoints="" id="Edge2" inPort="Port 0 (in)" metadata="04191a20-5f62-421b-886e-603974f55a94" outPort="Port 1 (out)" toNode="FOREACH_RESULTS_PART:0"/>
+</Phase>
+</Graph>

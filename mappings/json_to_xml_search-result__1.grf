@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph __version="3.5.0" author="pat" created="Mon May 04 21:29:37 CEST 2015" description="JSON To Xml&lt;search-result&gt;" guiVersion="3.4.4.P" id="1430811366622" licenseCode="Unlicensed" licenseType="Unknown" modified="Mon May 04 21:29:37 CEST 2015" modifiedBy="pat" name="JSON_To_Xml_search_result__1" preview-file="${Project_Home}/src/test/resources/get-suppliers-search-example.json" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="1" __referenceCounter="0" __sourcePath="{}/object/results/data" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="72628442-e586-46ae-97cf-c09d1b29d230" _parent_id="__parent_id" _type="Input" id="f5f596a8-e223-44cd-a177-62288219f1b9">
+<Record fieldDelimiter="," name="data" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="0" __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Input" id="756191c3-84ac-451b-a29c-da7d2db1a5ac">
+<Record fieldDelimiter="," name="object" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="0" __sourcePath="{}/object/results" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="756191c3-84ac-451b-a29c-da7d2db1a5ac" _parent_id="__parent_id" _type="Input" id="72628442-e586-46ae-97cf-c09d1b29d230">
+<Record fieldDelimiter="," name="results" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/object/results/columns" containerType="list" label="columns" name="columns" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="1" __referenceCounter="1" __sourcePath="{}/object/results/data/row" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="f5f596a8-e223-44cd-a177-62288219f1b9" _parent_id="__parent_id" _type="Input" id="48f152a6-d762-4bb8-890c-42a74e036d00">
+<Record fieldDelimiter="," name="row" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="1" __sourcePath="{}/object/results/data/row/supplierId" containerType="SINGLE" label="supplierId" name="supplierId" type="integer"/>
+<Field __index="2" __sourcePath="{}/object/results/data/row/supplierName" containerType="SINGLE" label="supplierName" name="supplierName" type="string"/>
+<Field __index="3" __sourcePath="{}/object/results/data/row/supplierLocation" containerType="SINGLE" label="supplierLocation" name="supplierLocation" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="0" __sourcePath="{}/search-result" _dataStructure="OBJECT" _id="__id" _type="Output" id="cb1097ff-aa54-4756-beb8-4feb7bbc96ff">
+<Record fieldDelimiter="," name="search_result" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/search-result/suppliers/supplier" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="cb1097ff-aa54-4756-beb8-4feb7bbc96ff" _parent_id="__parent_id" _type="Output" id="005d962a-fcf2-49fb-a4c5-c1af299ce388">
+<Record fieldDelimiter="," name="supplier" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __implementationClass="java.lang.Integer" __index="0" __sourcePath="{}/search-result/suppliers/supplier/supplierId" containerType="SINGLE" label="supplierId" name="supplierId" type="integer"/>
+<Field __implementationClass="java.lang.String" __index="1" __sourcePath="{}/search-result/suppliers/supplier/supplierName" containerType="SINGLE" label="supplierName" name="supplierName" type="string"/>
+<Field __implementationClass="java.lang.String" __index="2" __sourcePath="{}/search-result/suppliers/supplier/supplierLocation" containerType="SINGLE" label="supplierLocation" name="supplierLocation" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node enabled="enabled" fileURL="dict:outputPayload" guiName="XML WRITER" guiX="900" guiY="20" id="EXT_XML_WRITER0" type="EXT_XML_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<search-result xmlns:clover="http://www.cloveretl.com/ns/xmlmapping">
+  <suppliers>
+    <supplier clover:inPort="0">
+      <supplierId>$0.supplierId</supplierId>
+      <supplierName>$0.supplierName</supplierName>
+      <supplierLocation>$0.supplierLocation</supplierLocation>
+    </supplier>
+  </suppliers>
+</search-result>]]></attr>
+<attr name="_data_format"><![CDATA[XML]]></attr>
+<attr name="__metadata"><![CDATA[true]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'row' -&gt; 'supplier'" guiX="460" guiY="220" id="FOREACH_ROW_SUPPLIER" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+output.supplierId = input.supplierId;
+output.supplierName = input.supplierName;
+output.supplierLocation = input.supplierLocation;
+]]></attr>
+</Node>
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiName="JSON READER" guiX="20" guiY="20" id="JSON_READER0" type="JSON_READER">
+<attr name="__isJsonSchema"><![CDATA[false]]></attr>
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context xpath="/root">
+  <Context outPort="0" sequenceField="__id" xpath="object/results/data/row">
+    <Mapping cloverField="supplierId" trim="true" xpath="supplierId"/>
+    <Mapping cloverField="supplierName" trim="true" xpath="supplierName"/>
+    <Mapping cloverField="supplierLocation" trim="true" xpath="supplierLocation"/>
+  </Context>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[JSON]]></attr>
+<attr name="jsonSchemaURL"><![CDATA[./src/test/resources/get-suppliers-search-example.json]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="FOREACH_ROW_SUPPLIER:0" guiBendpoints="" id="Edge5" inPort="Port 0 (in)" metadata="005d962a-fcf2-49fb-a4c5-c1af299ce388" outPort="Port 0 (out)" toNode="EXT_XML_WRITER0:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:0" guiBendpoints="" id="Edge4" inPort="Port 0 (in)" metadata="48f152a6-d762-4bb8-890c-42a74e036d00" outPort="Port 0 (out)" toNode="FOREACH_ROW_SUPPLIER:0"/>
+</Phase>
+</Graph>

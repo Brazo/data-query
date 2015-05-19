@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.6.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+        <http:request-config name="HTTP_Request_Configuration" host="localhost" port="7474"  doc:name="HTTP Request Configuration" >
+        <http:basic-authentication username="neo4j" password="blog"/>
+    </http:request-config>
+    <data-mapper:config name="JSON_To_XML_1" transformationGraphPath="json_to_xml_1.grf" doc:name="JSON_To_XML_1"/>
+    <sub-flow name="neo4j-adapter-call-out">
+        <http:request config-ref="HTTP_Request_Configuration" path="db/data/transaction/commit" method="POST" doc:name="neo4j single transaction cyper callout">
+            <http:request-builder>
+                <http:header headerName="Accept" value="application/json; charset=UTF-8"/>
+                <http:header headerName="Content-Type" value="application/json"/>
+                <http:header headerName="Authorization" value="Basic bmVvNGo6YmxvZw=="/>
+            </http:request-builder>
+        </http:request>
+        <object-to-string-transformer doc:name="Object to String" mimeType="application/json"/>
+    </sub-flow>
+    <flow name="neo4j-adapter-get-part">
+        <message-properties-transformer scope="invocation" doc:name="Message Properties">
+            <add-message-property key="neoquery" value="#[&quot;match (n:Part) where n.itemId= &quot;+part_id+ &quot; RETURN n&quot;]"/>
+        </message-properties-transformer>
+        <set-payload value="{ &quot;statements&quot; : [ { &quot;statement&quot; : &quot;#[flowVars.neoquery]&quot; } ] }" doc:name="set neo4j query as json payload"/>
+        <flow-ref name="neo4j-adapter-call-out" doc:name="neo4j query"/>
+        <message-properties-transformer scope="invocation" doc:name="Message Properties">
+            <add-message-property key="part_type" value="#[json:results[0]/data[0]/row[0]/itemName]"/>
+            <add-message-property key="part_price_euro" value="#[json:results[0]/data[0]/row[0]/priceEuro]"/>
+        </message-properties-transformer>
+    </flow>
+    <flow name="neo4j-adapter-search-parts-used-for">
+        <set-payload value="{ &quot;statements&quot; : [ { &quot;statement&quot; : &quot;match (n:Part)-[:belongsTo]-&gt;(p:Part) where n.itemId=#[usedfor] return p&quot; } ] }" doc:name="Set Payload"/>
+        <flow-ref name="neo4j-adapter-call-out" doc:name="neo4j-adapter-call-out"/>
+    </flow>
+    <flow name="neo4j-adapter-search-parts-belongs-to">
+        <set-payload value="{ &quot;statements&quot; : [ { &quot;statement&quot; : &quot;match (n:Part)-[:belongsTo]-&gt;(p:Part) where p.itemId=#[belongsto] return n&quot; } ] }" doc:name="Set Payload"/>
+        <flow-ref name="neo4j-adapter-call-out" doc:name="neo4j-adapter-call-out"/>
+    </flow>
+    <flow name="neo4j-adapter-search-parts-delivered-by">
+        <set-payload value="{ &quot;statements&quot; : [ { &quot;statement&quot; : &quot;match (s:Supplier)-[:delivers]-&gt;(p:Part) where s.supplierId=#[deliveredby] return p&quot; } ] }" doc:name="Set Payload"/>
+        <flow-ref name="neo4j-adapter-call-out" doc:name="neo4j-adapter-call-out"/>
+    </flow>
+        <flow name="neo4j-adapter-search-parts-made-of">
+        <set-payload value="{ &quot;statements&quot; : [ { &quot;statement&quot; : &quot;match (p:Part)&lt;-[:belongsTo*]-(n:Part) where p.itemId = #[madeof] return n&quot; } ] }" doc:name="Set Payload"/>
+        <flow-ref name="neo4j-adapter-call-out" doc:name="neo4j-adapter-call-out"/>
+    </flow>
+    <flow name="neo4j-adapter-search-parts">
+        <set-payload value="{ &quot;statements&quot; : [ { &quot;statement&quot; : &quot;match (p:Part) return p&quot; } ] }" doc:name="Set Payload"/>
+        <flow-ref name="neo4j-adapter-call-out" doc:name="neo4j-adapter-call-out"/>
+    </flow>
+    <flow name="neo4j-adapter-search-suppliers">
+        <set-payload value="{ &quot;statements&quot; : [ { &quot;statement&quot; : &quot;match (s:Supplier) return s&quot; } ] }" doc:name="Set Payload"/>
+        <flow-ref name="neo4j-adapter-call-out" doc:name="neo4j-adapter-call-out"/>
+    </flow>
+</mule>

@@ -1,0 +1,19 @@
+<search-result>
+  <suppliers>
+    <supplier>
+      <supplierId>1</supplierId>
+      <supplierName>Groß &amp; Schwer</supplierName>
+      <supplierLocation>DE</supplierLocation>
+    </supplier>
+    <supplier>
+      <supplierId>2</supplierId>
+      <supplierName>Klein und Gut</supplierName>
+      <supplierLocation>DE</supplierLocation>
+    </supplier>
+    <supplier>
+      <supplierId>3</supplierId>
+      <supplierName>Dick und Glücklich</supplierName>
+      <supplierLocation>DE</supplierLocation>
+    </supplier>
+  </suppliers>
+</search-result>

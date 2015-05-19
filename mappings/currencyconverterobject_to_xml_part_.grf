@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph __version="3.5.0" author="pat" created="Fri Apr 17 15:47:54 CEST 2015" description="CurrencyConverterObject To Xml&lt;part&gt;" guiVersion="3.4.4.P" id="1429279400922" licenseCode="Unlicensed" licenseType="Unknown" modified="Fri Apr 17 15:47:54 CEST 2015" modifiedBy="pat" name="CurrencyConverterObject_To_Xml_part_" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Input" id="4689284d-660d-4b80-ac86-e2dd8d5b7b38">
+<Record fieldDelimiter="," name="CurrencyConverterObject" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/object/fromCurrency" containerType="SINGLE" label="fromCurrency" name="fromCurrency" type="string"/>
+<Field __index="1" __sourcePath="{}/object/fromPrice" containerType="SINGLE" label="fromPrice" name="fromPrice" type="decimal"/>
+<Field __index="2" __sourcePath="{}/object/toCurrency" containerType="SINGLE" label="toCurrency" name="toCurrency" type="string"/>
+<Field __index="3" __sourcePath="{}/object/toPrice" containerType="SINGLE" label="toPrice" name="toPrice" type="decimal"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/part" _dataStructure="OBJECT" _id="__id" _type="Output" id="e57b33b8-ddb0-41a6-acee-0ec69c9be516">
+<Record fieldDelimiter="," name="part" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __implementationClass="java.lang.Integer" __index="0" __sourcePath="{}/part/item-id" containerType="SINGLE" label="item-id" name="item_id" type="integer"/>
+<Field __implementationClass="java.lang.String" __index="1" __sourcePath="{}/part/type" containerType="SINGLE" label="type" name="type" type="string"/>
+<Field __implementationClass="java.lang.String" __index="2" __sourcePath="{}/part/currency" containerType="SINGLE" label="currency" name="currency" type="string"/>
+<Field __implementationClass="java.lang.Integer" __index="3" __sourcePath="{}/part/price" containerType="SINGLE" label="price" name="price" type="integer"/>
+<Field __implementationClass="java.lang.String" __index="4" __sourcePath="{}/part/link/rel" containerType="SINGLE" label="rel" name="rel" type="string"/>
+<Field __implementationClass="java.lang.String" __index="5" __sourcePath="{}/part/link/href" containerType="SINGLE" label="href" name="href" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+<Entry dictval.__javaType="java.lang.String" id="DictionaryEntry2" input="true" name="part_type" output="false" type="string"/>
+<Entry dictval.__javaType="java.lang.String" id="DictionaryEntry3" input="true" name="part_id" output="false" type="string"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node enabled="enabled" fileURL="dict:inputPayload" guiName="Pojo READER" guiX="20" guiY="20" id="BEAN_READER0" type="BEAN_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context outPort="0" sequenceField="__id" xpath=".">
+  <Mapping cloverField="fromCurrency" trim="true" xpath="fromCurrency"/>
+  <Mapping cloverField="fromPrice" trim="true" xpath="fromPrice"/>
+  <Mapping cloverField="toCurrency" trim="true" xpath="toCurrency"/>
+  <Mapping cloverField="toPrice" trim="true" xpath="toPrice"/>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[JAVA]]></attr>
+<attr name="schema"><![CDATA[<?xml version="1.0" encoding="UTF-8"?><schema-object>
+  <typed-object-ref type-ref="org.mule.modules.converter.currency.CurrencyConverterObject"/>
+  <typed-object type="java.math.BigDecimal"/>
+  <typed-object type="org.mule.modules.converter.currency.CurrencyConverterObject">
+    <typed-object-ref name="fromCurrency" type-ref="java.lang.String"/>
+    <typed-object-ref name="fromPrice" type-ref="java.math.BigDecimal"/>
+    <typed-object-ref name="toCurrency" type-ref="java.lang.String"/>
+    <typed-object-ref name="toPrice" type-ref="java.math.BigDecimal"/>
+  </typed-object>
+  <typed-object type="java.lang.String"/>
+</schema-object>
+]]></attr>
+<attr name="__metadata"><![CDATA[true]]></attr>
+</Node>
+<Node enabled="enabled" fileURL="dict:outputPayload" guiName="XML WRITER" guiX="900" guiY="20" id="EXT_XML_WRITER0" type="EXT_XML_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<part xmlns:clover="http://www.cloveretl.com/ns/xmlmapping" clover:inPort="0">
+  <item-id>$0.item_id</item-id>
+  <type>$0.type</type>
+  <currency>$0.currency</currency>
+  <price>$0.price</price>
+  <link>
+    <rel>$0.rel</rel>
+    <href>$0.href</href>
+  </link>
+</part>]]></attr>
+<attr name="_data_format"><![CDATA[XML]]></attr>
+<attr name="__metadata"><![CDATA[true]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'object' -&gt; 'part'" guiX="460" guiY="20" id="FOREACH_OBJECT_PART" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+output.currency = input.toCurrency;
+output.price = decimal2integer(input.toPrice);
+output.item_id = str2integer(inputArguments.part_id);
+output.type = inputArguments.part_type;]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="BEAN_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="4689284d-660d-4b80-ac86-e2dd8d5b7b38" outPort="Port 0 (out)" toNode="FOREACH_OBJECT_PART:0"/>
+<Edge debugMode="true" fromNode="FOREACH_OBJECT_PART:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="e57b33b8-ddb0-41a6-acee-0ec69c9be516" outPort="Port 0 (out)" toNode="EXT_XML_WRITER0:0"/>
+</Phase>
+</Graph>

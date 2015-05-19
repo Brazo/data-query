@@ -1,0 +1,14 @@
+<search-result>
+	<parts>
+		<part>
+			<item-id>1</item-id>
+			<type>Skrews</type>
+			<link rel="part" href="/parts/1" />
+		</part>
+		<part>
+			<item-id>2</item-id>
+			<type>Skrews</type>
+			<link rel="part" href="/parts/2" />
+		</part>
+	</parts>
+</search-result>

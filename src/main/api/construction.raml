@@ -1,0 +1,75 @@
+#%RAML 0.8
+baseUri: http://mocksvc.mulesoft.com/mocks/691bbab9-5052-4d38-b4ff-350fc6e0981a/mocks/a0c9ed37-29f1-4cf3-b949-e5beb8eae477/api
+title: construction-machine
+version: 1
+/parts:
+  /search:
+    description: The search resource for parts.
+    get:
+      description: List all parts in the system when used without query parameters. Query parameters allow powerful depenency searches. For now only one parameter at a time is allowed.
+      queryParameters:
+        used-for:
+          type: number
+          example: 12
+          required: false
+          description: The id of the part x to retrieve all other parts (v,y,z) containing that part x (x)-[:used-for]->(v,y,z)
+        belongs-to:
+          type: number
+          example: 1
+          required: false
+          description: The id of the part x to retrieve all components (v,y,z) of that part x (v,y,z)-[:belongs-to]->(x)
+        delivered-by:
+          type: number
+          example: 23
+          required: false
+          description: Retrieve all parts that are delivered by a specific supplier.
+        made-of:
+          type: number
+          example: 13
+          required: false
+          description: Retrieve all parts that are used to assemble the part with the given id (all paths to root)
+      responses:
+        200:
+          body:
+            application/xml:
+              example: !include get-search-list-example.xml
+              schema: !include get-search-list-schema.xsd
+        400:
+          description: Specifically thrown when multiple query parameters are used in parallel
+          body:
+            text/plain: 
+              example: Only one query parameter per request is allowed.
+  /{part_id}:
+    description: List the intance resource of a part
+    get:
+      responses:
+        200:
+          body:
+            application/xml:
+              example: !include get-part-instance-example.xml
+              schema: !include get-part-instance-schema.xsd
+    /price:
+      description: Returns the price of a part in the currency of the given currency code.
+      get:
+        queryParameters:
+          currency-code:
+            type: string
+            example: CHF
+            required: true
+            description: Get the real time price of a part using a defined currency code.
+        responses:
+          200:
+            body:
+              application/xml:
+                example: !include get-price-instance-example.xml
+                schema: !include get-price-instance-schema.xsd
+/suppliers:
+  /search:
+    description: Search resource for suppliers. Returns the list of suppliers in the system.
+    get:
+      responses:
+        200:
+          body:
+            application/xml:
+              example: !include get-suppliers-search-example.xml
+              schema: !include get-suppliers-search-schema.xsd
