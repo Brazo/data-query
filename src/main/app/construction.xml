@@ -16,7 +16,7 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
 http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
 http://www.mulesoft.org/schema/mule/GoogleCurrencyConnector http://www.mulesoft.org/schema/mule/GoogleCurrencyConnector/current/mule-GoogleCurrencyConnector.xsd
 http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd"
-	version="EE-3.6.1">
+	>
 	<http:listener-config name="construction-httpListenerConfig"
 		host="localhost" port="8081" doc:name="HTTP Listener Configuration" />
 	<apikit:config name="construction-config" raml="construction.raml"
@@ -87,14 +87,11 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 
 		</apikit:mapping>
 	</apikit:mapping-exception-strategy>
-	<flow name="construction-main">
-		<http:listener config-ref="construction-httpListenerConfig"
-			path="/api/*" doc:name="HTTP" />
-		<apikit:router config-ref="construction-config"
-			doc:name="APIkit Router" />
-		<exception-strategy ref="construction-apiKitGlobalExceptionMapping"
-			doc:name="Reference Exception Strategy" />
-	</flow>
+    <flow name="constructionFlow">
+        <http:listener config-ref="construction-httpListenerConfig" path="/query/*" doc:name="HTTP"/>
+        <apikit:router config-ref="construction-config" doc:name="APIkit Router"/>
+        <exception-strategy ref="construction-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
+    </flow>
 	<flow name="get:/parts/search:construction-config">
 		<message-properties-transformer scope="invocation"
 			doc:name="Set query parameters as flow vars">
